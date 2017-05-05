@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'RepoBrowserController@index');
+Route::get('/csv', 'RepoBrowserController@csv');
