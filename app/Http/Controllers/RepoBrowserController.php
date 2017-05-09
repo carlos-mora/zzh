@@ -27,12 +27,14 @@ class RepoBrowserController extends Controller
     public function csv(GithubRepo $repo)
     {
         $projects = $repo->getAll();
+        /*
         return response()
             ->download($pathToFile, $name, $headers)
             ->header('Content-Type', 'text/csv')
-            ->header('Cache-Control','max-age=0, must-revalidate, no-cache, no-store, private');
+            ->header('Cache-Control','max-age=0, must-revalidate, no-cache, no-store, private')
             ->deleteFileAfterSend(true);
-        return response(view('repo.csv', compact('projects')))
+        */
+        return response(view('repo.csv', compact('projects')));
         
     }
 
