@@ -20,22 +20,34 @@ class RepoBrowserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Generate CSV file for the repo list.
      *
      * @return \Illuminate\Http\Response
      */
     public function csv(GithubRepo $repo)
     {
+        $headers = [
+                'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+            ,   'Content-type'        => 'text/csv'
+            ,   'Content-Disposition' => 'attachment; filename=repo.csv'
+        ];
+
         $projects = $repo->getAll();
-        /*
-        return response()
-            ->download($pathToFile, $name, $headers)
-            ->header('Content-Type', 'text/csv')
-            ->header('Cache-Control','max-age=0, must-revalidate, no-cache, no-store, private')
-            ->deleteFileAfterSend(true);
-        */
-        return response(view('repo.csv', compact('projects')));
-        
+
+        $callback = function() use ($projects)
+        {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, ['Nombre', 'Propietario', 'Estrellas', 'Forks', 'Issues'], ';');
+
+            foreach ($projects as $project) {
+                fputcsv($file, [$project->name, $project->owner->login, $project->watchers, $project->forks, $project->open_issues_count], ';');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
 }

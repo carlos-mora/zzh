@@ -16,7 +16,7 @@
 <div class="container">
 	<div class="row">
 		<div class="sm-12">
-			<h2 class="text-center">Symfony Github Repositories <a href="{{route('csv')}}"><i class="fa fa-download"></i></a></h2>
+			<h2 class="text-center">Symfony Github Repositories <a href="{{route('csv')}}"><i class="fa fa-download"></i> <small>Descarga</small></a></h2>
 			<table class="table">
 
 				<tr>
@@ -35,10 +35,10 @@
 						<td class="text-center">{{$project->forks}}</td>
 						<td class="text-center">{{$project->open_issues_count}}</td>
 					</tr>
-				@endforeach	
+				@endforeach
 			</table>
 		</div>
-	</div>	
-</div>	
+	</div>
+</div>
 </body>
 </html>
